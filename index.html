@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>H.S Calculator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f0f0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .calculator {
+      background: #222;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+      width: 300px;
+    }
+
+    .logo {
+      text-align: center;
+      color: white;
+      font-size: 21px;
+      margin-bottom: 15px;
+      font-weight: bold;
+    }
+
+    .display {
+      background: #000;
+      color: #0f0;
+      font-size: 28px;
+      text-align: right;
+      padding: 15px;
+      border-radius: 10px;
+      margin-bottom: 15px;
+      min-height: 65px;
+      overflow-x: auto;
+      white-space: nowrap;
+      scrollbar-width: none;
+    }
+
+    .display::-webkit-scrollbar {
+      display: none;
+    }
+
+    .buttons {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+
+    button {
+      padding: 20px;
+      font-size: 20px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    button:active {
+      opacity: 0.8;
+    }
+
+    .number {
+      background: #333;
+      color: white;
+    }
+
+    .operator {
+      background: #ff9500;
+      color: white;
+    }
+
+    .clear {
+      background: #ff3b30;
+      color: white;
+    }
+
+    .equals {
+      background: #34c759;
+      color: white;
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 15px;
+      color: #aaa;
+      font-size: 12px;
+    }
+
+    .footer a {
+      color: #0f0;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="calculator">
+    <div class="logo">🧮 WELCOME H.S CALCULATOR</div>
+    <div class="display" id="display">0</div>
+
+    <div class="buttons">
+      <button class="clear" onclick="clearDisplay()">C</button>
+      <button onclick="deleteLast()">⌫</button>
+      <button class="operator" onclick="appendToDisplay('/')">÷</button>
+      <button class="operator" onclick="appendToDisplay('*')">×</button>
+
+      <button class="number" onclick="appendToDisplay('7')">7</button>
+      <button class="number" onclick="appendToDisplay('8')">8</button>
+      <button class="number" onclick="appendToDisplay('9')">9</button>
+      <button class="operator" onclick="appendToDisplay('-')">−</button>
+
+      <button class="number" onclick="appendToDisplay('4')">4</button>
+      <button class="number" onclick="appendToDisplay('5')">5</button>
+      <button class="number" onclick="appendToDisplay('6')">6</button>
+      <button class="operator" onclick="appendToDisplay('+')">+</button>
+
+      <button class="number" onclick="appendToDisplay('1')">1</button>
+      <button class="number" onclick="appendToDisplay('2')">2</button>
+      <button class="number" onclick="appendToDisplay('3')">3</button>
+      <button class="equals" onclick="calculate()">=</button>
+
+      <button class="number" onclick="appendToDisplay('0')" style="grid-column: span 2;">0</button>
+      <button class="number" onclick="appendToDisplay('.')">.</button>
+    </div>
+
+    <div class="footer">
+      <p>Privacy Protected • Contact: <a href="mailto:patiomotu775@gmail.com">patiomotu775@gmail.com</a></p>
+    </div>
+  </div>
+
+  <script>
+    let display = document.getElementById('display');
+    let current = '0';
+
+    function updateDisplay() {
+      display.textContent = current;
+    }
+
+    function appendToDisplay(num) {
+      if (current === '0' && num !== '.') {
+        current = num;
+      } else {
+        current += num;
+      }
+      updateDisplay();
+    }
+
+    function clearDisplay() {
+      current = '0';
+      updateDisplay();
+    }
+
+    function deleteLast() {
+      if (current.length > 1) {
+        current = current.slice(0, -1);
+      } else {
+        current = '0';
+      }
+      updateDisplay();
+    }
+
+    function calculate() {
+      try {
+        current = eval(current.replace('×', '*').replace('÷', '/')).toString();
+      } catch {
+        current = 'Error';
+      }
+      updateDisplay();
+    }
+
+    updateDisplay();
+  </script>
+
+</body>
+</html>
